@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/background"
     tools:context=".ui.TodoActivity">
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Shankar Bhandari"
+        android:text="User"
         android:textSize="@dimen/medium_text"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_greeting"
@@ -35,7 +35,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_greeting" />
 
@@ -88,16 +88,105 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:listitem="@layout/category_layout" />
 
- 
 
-
-    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="@drawable/bottom_section_bg"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/recview"
-        android:layout_height="200dp"
-        app:cardCornerRadius="@dimen/dp_2_x_9">
+        app:layout_constraintStart_toStartOf="@+id/recview">
 
-    </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/botm_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:text="Today's Task"
+            android:textColor="@color/black"
+            android:textSize="@dimen/large_text"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/task_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/task_sketching"
+            app:cardCornerRadius="@dimen/dp_2_x_9"
+            app:layout_constraintStart_toStartOf="@+id/botm_title"
+            app:layout_constraintTop_toBottomOf="@+id/botm_title">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="TODO"
+                android:scaleType="fitXY"
+                android:src="@drawable/pen"
+                app:tint="@color/white" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/task_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:text="Sketching"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/task_icon"
+            app:layout_constraintTop_toTopOf="@+id/task_icon" />
+
+        <TextView
+            android:id="@+id/task_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 Competed"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/mini_text"
+            app:layout_constraintBottom_toBottomOf="@+id/task_icon"
+            app:layout_constraintStart_toStartOf="@+id/task_heading"
+            app:layout_constraintTop_toBottomOf="@+id/task_heading" />
+
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/task_point_bg"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:text="4"
+            android:textAlignment="center"
+            android:textColor="#7A12654C"
+            android:textSize="@dimen/medium_text"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/task_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/task_heading" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/floating_action"
+            android:contentDescription="TODO"
+            android:elevation="8dp"
+            android:scaleType="center"
+            android:src="@drawable/baseline_add_24"
+            app:fabSize="auto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="40dp"
+            app:shapeAppearance="@style/customNormalFAB" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

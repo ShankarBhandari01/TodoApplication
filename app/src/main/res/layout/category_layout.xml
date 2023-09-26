@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="120dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/teal_700"
-    app:cardCornerRadius="@dimen/dp_2_x_9">
+<layout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <data>
+
+        <variable
+            name="category"
+            type="com.shankar.todoapplication.model.CategoryModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="vertical">
+        app:cardBackgroundColor="@{category.backgroundColor}"
+        app:cardCornerRadius="@dimen/dp_2_x_9">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:contentDescription="TODO"
-            android:src="@drawable/baseline_search_24"
-            app:tint="@color/white" />
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_marginBottom="5dp"
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Design"
-            android:textSize="@dimen/small_text" />
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="TODO"
+                android:src="@{category.image}"
+                app:tint="@color/white" />
 
-        <TextView
-            android:id="@+id/task_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="\u25CF 5 task" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@{category.title}"
+                android:textSize="@dimen/small_text" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@null"
-            android:src="@drawable/baseline_add_24"
-            android:contentDescription="TODO"
-            app:tint="@color/white" />
+            <TextView
+                android:id="@+id/task_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`\u25CF `+ category.taskNumber + ` task`}" />
 
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <ImageButton
+                android:id="@+id/imgbtn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@null"
+                android:contentDescription="TODO"
+                android:src="@drawable/baseline_add_24"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
