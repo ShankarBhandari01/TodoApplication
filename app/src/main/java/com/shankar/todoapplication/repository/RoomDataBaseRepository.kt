@@ -1,37 +1,37 @@
 package com.shankar.todoapplication.repository
 
 import androidx.room.Transaction
-import com.shankar.todoapplication.database.AppDatabase
-import com.shankar.todoapplication.database.BaseDao
-import com.shankar.todoapplication.database.DatabaseManager
+import com.shankar.todoapplication.base.UiState
+import com.shankar.todoapplication.database.CategoryDao
 import com.shankar.todoapplication.model.CategoryModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 
-class RoomDataBaseRepository<T>(private val dao: BaseDao<T>) : BaseDao<T> {
 
-    override fun getById(ID: Int): Flow<T> {
-        return dao.getById(ID)
+class RoomDataBaseRepository(private val dao: CategoryDao) {
+
+    fun getById(ID: Int): Flow<CategoryModel> = flow {
+        emit(dao.getById(ID))
     }
 
-    override suspend fun delete() {
-        dao.delete()
-    }
-
-    override suspend fun update(data: T) {
+    suspend fun update(data: CategoryModel) {
         dao.update(data)
     }
 
     @Transaction
-    override suspend fun insert(data: List<T>) {
-        delete()
+    suspend fun insert(data: List<CategoryModel>) {
+        dao.delete()
         dao.insert(data)
     }
 
-    override suspend fun insert(data: T) {
+    suspend fun insert(data: CategoryModel) {
         dao.insert(data)
     }
 
-    override fun getAllList(): Flow<List<T>> {
+    fun getAllList(): Flow<List<CategoryModel>> {
         return dao.getAllList()
     }
 }

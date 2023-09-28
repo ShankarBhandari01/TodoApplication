@@ -1,4 +1,4 @@
-package com.shankar.todoapplication.database.type_convertor
+package com.shankar.todoapplication.type_convertor
 
 import android.content.res.Resources
 import android.graphics.Bitmap

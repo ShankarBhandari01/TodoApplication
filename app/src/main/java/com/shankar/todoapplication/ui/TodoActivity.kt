@@ -2,26 +2,46 @@ package com.shankar.todoapplication.ui
 
 import android.os.Bundle
 import android.view.View
+import android.window.SplashScreen
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.shankar.todoapplication.R
 import com.shankar.todoapplication.base.BaseActivity
+import com.shankar.todoapplication.base.UiState
+import com.shankar.todoapplication.base.ViewModelFactory
 import com.shankar.todoapplication.databinding.ActivityTodoBinding
 import com.shankar.todoapplication.model.CategoryModel
 import com.shankar.todoapplication.repository.RoomDataBaseRepository
 import com.shankar.todoapplication.ui.adapter.CategoryAdaptor
+import com.shankar.todoapplication.viewmodels.TodoViewModels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodoActivity : BaseActivity() {
     private val binding by lazy {
         ActivityTodoBinding.inflate(layoutInflater)
     }
+    private lateinit var viewModel: TodoViewModels
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                RoomDataBaseRepository(database.categoryDao())
+            )
+        )[TodoViewModels::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupViewModel()
         initRecyclerView()
         setUpUser()
-        retriveDataFromdatabase()
+        retrieveDataFromDatabase()
     }
 
     private fun setUpUser() {
@@ -59,23 +79,35 @@ class TodoActivity : BaseActivity() {
         list.add(categoryModelLearning)
         list.add(categoryModelMeeting)
 
-
-        applicationScope.launch(Dispatchers.IO) {
-            RoomDataBaseRepository(database.categoryDao()).insert(list)
-        }
-
-
+        // insert operation
+        viewModel.insertCategory(list)
     }
 
-    private fun retriveDataFromdatabase() {
-        applicationScope.launch {
-            RoomDataBaseRepository(database.categoryDao()).getAllList().collect { list ->
-                if (list.isNotEmpty()) {
-                    val categoryAdaptor = CategoryAdaptor(list, this@TodoActivity)
-                    binding.recview.adapter = categoryAdaptor
+    private fun retrieveDataFromDatabase() {
+        viewModel.getCategory()
+        lifecycleScope.launch {
+            viewModel.getCategoryList.collect { category ->
+                when (category) {
+                    is UiState.Loading -> {
+
+                    }
+
+                    is UiState.Success -> {
+
+                        val categoryAdaptor =
+                            category.data?.let { CategoryAdaptor(it, this@TodoActivity) }
+                        binding.recview.adapter = categoryAdaptor
+                    }
+
+                    is UiState.Error -> {
+
+                    }
+
+                    else -> {}
                 }
             }
         }
+
 
     }
 }

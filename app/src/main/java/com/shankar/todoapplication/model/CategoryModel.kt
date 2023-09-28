@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.shankar.todoapplication.database.type_convertor.DrawableTypeConvertor
+import com.shankar.todoapplication.type_convertor.DrawableTypeConvertor
 
 @Entity(tableName = "Tbl_category")
 data class CategoryModel(
