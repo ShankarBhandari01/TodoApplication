@@ -32,8 +32,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/_46sdp"
+        android:layout_height="@dimen/_46sdp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_230sdp"
         android:background="@drawable/bottom_section_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/recview">
@@ -113,8 +113,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/task_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
             android:layout_marginTop="30dp"
             android:backgroundTint="@color/task_sketching"
             app:cardCornerRadius="@dimen/dp_2_x_9"
@@ -157,8 +157,8 @@
 
 
         <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/_25ssp"
+            android:layout_height="@dimen/_25ssp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/task_point_bg"
             android:gravity="center"
@@ -182,10 +182,9 @@
             android:scaleType="center"
             android:src="@drawable/baseline_add_24"
             app:fabSize="auto"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="40dp"
+            app:maxImageSize="@dimen/_39sdp"
             app:shapeAppearance="@style/customNormalFAB" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
