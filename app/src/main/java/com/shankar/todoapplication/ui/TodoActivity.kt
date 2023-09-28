@@ -1,6 +1,5 @@
 package com.shankar.todoapplication.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,7 +7,10 @@ import com.shankar.todoapplication.R
 import com.shankar.todoapplication.base.BaseActivity
 import com.shankar.todoapplication.databinding.ActivityTodoBinding
 import com.shankar.todoapplication.model.CategoryModel
+import com.shankar.todoapplication.repository.RoomDataBaseRepository
 import com.shankar.todoapplication.ui.adapter.CategoryAdaptor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TodoActivity : BaseActivity() {
     private val binding by lazy {
@@ -19,6 +21,7 @@ class TodoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         initRecyclerView()
         setUpUser()
+        retriveDataFromdatabase()
     }
 
     private fun setUpUser() {
@@ -30,24 +33,24 @@ class TodoActivity : BaseActivity() {
         return binding.root
     }
 
-    override fun initRecyclerView() {
+    private fun initRecyclerView() {
         val list: ArrayList<CategoryModel> = ArrayList()
         val categoryModel = CategoryModel()
-        categoryModel.image = ContextCompat.getDrawable(this, R.drawable.painting)
+        categoryModel.image = R.drawable.painting
         categoryModel.title = "Design"
         categoryModel.taskNumber = 5
         categoryModel.backgroundColor = ContextCompat.getColor(this, R.color.design_card)
 
 
         val categoryModelLearning = CategoryModel()
-        categoryModelLearning.image = ContextCompat.getDrawable(this, R.drawable.learing)
+        categoryModelLearning.image = R.drawable.learing
         categoryModelLearning.title = "Learning"
         categoryModelLearning.taskNumber = 3
         categoryModelLearning.backgroundColor = ContextCompat.getColor(this, R.color.learning_card)
 
 
         val categoryModelMeeting = CategoryModel()
-        categoryModelMeeting.image = ContextCompat.getDrawable(this, R.drawable.meeting)
+        categoryModelMeeting.image = R.drawable.meeting
         categoryModelMeeting.title = "Meeting"
         categoryModelMeeting.taskNumber = 1
         categoryModelMeeting.backgroundColor = ContextCompat.getColor(this, R.color.meeting_card)
@@ -55,8 +58,24 @@ class TodoActivity : BaseActivity() {
         list.add(categoryModel)
         list.add(categoryModelLearning)
         list.add(categoryModelMeeting)
-        val categoryAdaptor = CategoryAdaptor(list, this)
-        binding.recview.adapter = categoryAdaptor
+
+
+        applicationScope.launch(Dispatchers.IO) {
+            RoomDataBaseRepository(database.categoryDao()).insert(list)
+        }
+
+
     }
 
+    private fun retriveDataFromdatabase() {
+        applicationScope.launch {
+            RoomDataBaseRepository(database.categoryDao()).getAllList().collect { list ->
+                if (list.isNotEmpty()) {
+                    val categoryAdaptor = CategoryAdaptor(list, this@TodoActivity)
+                    binding.recview.adapter = categoryAdaptor
+                }
+            }
+        }
+
+    }
 }

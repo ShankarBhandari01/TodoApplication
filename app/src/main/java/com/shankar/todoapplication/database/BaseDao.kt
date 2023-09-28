@@ -3,9 +3,10 @@ package com.shankar.todoapplication.database
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+interface BaseDao<T> {
 
-@Dao
-interface IDao<T> {
+    fun getById(ID: Int): Flow<T>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(data: T)
 
@@ -16,7 +17,7 @@ interface IDao<T> {
     suspend fun update(data: T)
 
     @Delete
-    suspend fun delete(data: T)
+    suspend fun delete()
 
-    suspend fun getById(ID:Int): Flow<T>
+    fun getAllList(): Flow<List<T>>
 }

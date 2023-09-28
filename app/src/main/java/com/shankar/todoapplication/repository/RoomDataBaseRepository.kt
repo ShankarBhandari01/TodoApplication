@@ -1,30 +1,37 @@
 package com.shankar.todoapplication.repository
 
+import androidx.room.Transaction
 import com.shankar.todoapplication.database.AppDatabase
-import com.shankar.todoapplication.database.IDao
-import com.shankar.todoapplication.database.TaskDao
+import com.shankar.todoapplication.database.BaseDao
+import com.shankar.todoapplication.database.DatabaseManager
 import com.shankar.todoapplication.model.CategoryModel
 import kotlinx.coroutines.flow.Flow
 
-class RoomDataBaseRepository(private val appDatabase: AppDatabase) : TaskDao {
-    override suspend fun getById(ID: Int): Flow<CategoryModel> {
-        TODO("Not yet implemented")
+class RoomDataBaseRepository<T>(private val dao: BaseDao<T>) : BaseDao<T> {
+
+    override fun getById(ID: Int): Flow<T> {
+        return dao.getById(ID)
     }
 
-    override suspend fun insert(data: CategoryModel) {
-        TODO("Not yet implemented")
+    override suspend fun delete() {
+        dao.delete()
     }
 
-    override suspend fun insert(data: List<CategoryModel>) {
-        TODO("Not yet implemented")
+    override suspend fun update(data: T) {
+        dao.update(data)
     }
 
-    override suspend fun update(data: CategoryModel) {
-        TODO("Not yet implemented")
+    @Transaction
+    override suspend fun insert(data: List<T>) {
+        delete()
+        dao.insert(data)
     }
 
-    override suspend fun delete(data: CategoryModel) {
-        TODO("Not yet implemented")
+    override suspend fun insert(data: T) {
+        dao.insert(data)
     }
 
+    override fun getAllList(): Flow<List<T>> {
+        return dao.getAllList()
+    }
 }
