@@ -16,7 +16,7 @@ class OnAlarmReceiver : BroadcastReceiver() {
         Log.d(TAG, "Received wake up from alarm manager.")
 
         // Extract the row ID from the intent
-        val rowId = intent?.extras?.getLong(RemindersDbAdapter.KEY_ROWID) ?: -1L
+        val rowId = intent?.extras?.getLong("KEY_ROWID") ?: -1L
 
         if (rowId != -1L) {
             // Pass the row ID as input data

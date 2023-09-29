@@ -24,16 +24,16 @@ class ReminderWorker(context: Context, workerParams: WorkerParameters) :
         }
     }
 
-     fun doReminderWork(intent: String?){
-         showNotification(rowId: Long)
+    fun doReminderWork(intent: String?) {
+        // showNotification(rowId)
     }
 
-     fun releaseLock() {
+    fun releaseLock() {
         val lock = getLock(applicationContext)
         lock?.release()
     }
 
-     fun getLock(context: Context): PowerManager.WakeLock? {
+    fun getLock(context: Context): PowerManager.WakeLock? {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         return powerManager.newWakeLock(
             PowerManager.PARTIAL_WAKE_LOCK,
@@ -41,30 +41,30 @@ class ReminderWorker(context: Context, workerParams: WorkerParameters) :
         )
     }
 
-     private fun showNotification(rowId: Long) {
-         // Build the notification
-         val notificationIntent = Intent(applicationContext, TodoActivity::class.java)
-         notificationIntent.putExtra("KEY_ROWID", rowId)
+    private fun showNotification(rowId: Long) {
+        // Build the notification
+        val notificationIntent = Intent(applicationContext, TodoActivity::class.java)
+        notificationIntent.putExtra("KEY_ROWID", rowId)
 
-         val pendingIntent = PendingIntent.getActivity(
-             applicationContext,
-             rowId.toInt(),
-             notificationIntent,
-             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-         )
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            rowId.toInt(),
+            notificationIntent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val CHANNEL_ID = "1.0"
+        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+//             .setSmallIcon(R.drawable.ic_notification)
+//             .setContentTitle(applicationContext.getString(R.string.notify_new_task_title))
+//             .setContentText(applicationContext.getString(R.string.notify_new_task_message))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
 
-         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-             .setSmallIcon(R.drawable.ic_notification)
-             .setContentTitle(applicationContext.getString(R.string.notify_new_task_title))
-             .setContentText(applicationContext.getString(R.string.notify_new_task_message))
-             .setPriority(NotificationCompat.PRIORITY_HIGH)
-             .setContentIntent(pendingIntent)
-             .setAutoCancel(true)
-             .build()
-
-         // Show the notification
-         val notificationManager =
-             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-         notificationManager.notify(rowId.toInt(), notification)
-     }
+        // Show the notification
+        val notificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(rowId.toInt(), notification)
+    }
 }
