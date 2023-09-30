@@ -24,11 +24,11 @@ class ReminderWorker(context: Context, workerParams: WorkerParameters) :
         }
     }
 
-    fun doReminderWork(intent: String?) {
+    private fun doReminderWork(intent: String?) {
         // showNotification(rowId)
     }
 
-    fun releaseLock() {
+    private fun releaseLock() {
         val lock = getLock(applicationContext)
         lock?.release()
     }

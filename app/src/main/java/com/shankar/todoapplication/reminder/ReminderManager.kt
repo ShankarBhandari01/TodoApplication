@@ -7,7 +7,7 @@ import android.content.Intent
 import java.util.*
 
 
-class ReminderManager(var context: Context) {
+class ReminderManager(private var context: Context) {
     private var alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun setReminder(taskId: Long, time: Calendar) {
