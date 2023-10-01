@@ -41,6 +41,7 @@ class TodoActivity : BaseActivity() {
         retrieveDataFromDatabase()
         bottomSheetBinding = attachBaseBottomSheet()
 
+
     }
 
     private fun setUpUser() {

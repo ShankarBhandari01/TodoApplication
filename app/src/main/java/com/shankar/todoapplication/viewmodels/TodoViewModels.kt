@@ -11,9 +11,7 @@ import kotlinx.coroutines.launch
 
 
 class TodoViewModels(private val roomDataBaseRepository: RoomDataBaseRepository) : ViewModel() {
-
     private var _getCategoryList = MutableStateFlow<UiState<List<CategoryModel>>>(UiState.None())
-
     val getCategoryList: StateFlow<UiState<List<CategoryModel>>> = _getCategoryList
     fun getCategory() {
         viewModelScope.launch {

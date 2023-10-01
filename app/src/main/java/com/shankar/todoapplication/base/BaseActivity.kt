@@ -1,5 +1,6 @@
 package com.shankar.todoapplication.base
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,12 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun showBottomSheet() {
         if (bottomSheetDialog != null) {
             bottomSheetDialog?.show()
+        }
+    }
+
+    open fun hideBottomSheet() {
+        if (bottomSheetDialog != null) {
+            bottomSheetDialog?.hide()
         }
     }
 
