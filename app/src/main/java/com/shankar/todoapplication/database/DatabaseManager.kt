@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.shankar.todoapplication.utils.ROOM_DB_NAME
 
 object DatabaseManager {
+    @Volatile
     private var database: AppDatabase? = null
 
     fun getDatabase(context: Context): AppDatabase {

@@ -29,7 +29,7 @@ class CategoryAdaptor(var data: List<CategoryModel>, var context: TodoActivity) 
             )
         })
         holder.binding.imgbtnAdd.setOnClickListener {
-            context.showToast("Add buttons click")
+            context.showBottomSheet()
         }
     }
 

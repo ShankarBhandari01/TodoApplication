@@ -2,8 +2,6 @@ package com.shankar.todoapplication.ui
 
 import android.os.Bundle
 import android.view.View
-import android.window.SplashScreen
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -12,18 +10,18 @@ import com.shankar.todoapplication.base.BaseActivity
 import com.shankar.todoapplication.base.UiState
 import com.shankar.todoapplication.base.ViewModelFactory
 import com.shankar.todoapplication.databinding.ActivityTodoBinding
+import com.shankar.todoapplication.databinding.BottomSheetBinding
 import com.shankar.todoapplication.model.CategoryModel
 import com.shankar.todoapplication.repository.RoomDataBaseRepository
 import com.shankar.todoapplication.ui.adapter.CategoryAdaptor
 import com.shankar.todoapplication.viewmodels.TodoViewModels
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TodoActivity : BaseActivity() {
     private val binding by lazy {
         ActivityTodoBinding.inflate(layoutInflater)
     }
+    lateinit var bottomSheetBinding: BottomSheetBinding
     private lateinit var viewModel: TodoViewModels
 
     private fun setupViewModel() {
@@ -37,11 +35,12 @@ class TodoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupViewModel()
         initRecyclerView()
         setUpUser()
         retrieveDataFromDatabase()
+        bottomSheetBinding = attachBaseBottomSheet()
+
     }
 
     private fun setUpUser() {
@@ -89,25 +88,22 @@ class TodoActivity : BaseActivity() {
             viewModel.getCategoryList.collect { category ->
                 when (category) {
                     is UiState.Loading -> {
-
+                        showToast("Loading")
                     }
 
                     is UiState.Success -> {
-
                         val categoryAdaptor =
                             category.data?.let { CategoryAdaptor(it, this@TodoActivity) }
                         binding.recview.adapter = categoryAdaptor
                     }
 
                     is UiState.Error -> {
-
+                        showToast(category.message!!)
                     }
 
                     else -> {}
                 }
             }
         }
-
-
     }
 }

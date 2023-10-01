@@ -19,5 +19,6 @@
         <!-- Customize your theme here. -->
 
         <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 </resources>
