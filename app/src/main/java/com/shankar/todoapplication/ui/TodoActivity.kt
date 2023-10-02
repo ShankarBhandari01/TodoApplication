@@ -21,7 +21,7 @@ class TodoActivity : BaseActivity() {
     private val binding by lazy {
         ActivityTodoBinding.inflate(layoutInflater)
     }
-    lateinit var bottomSheetBinding: BottomSheetBinding
+    private lateinit var bottomSheetBinding: BottomSheetBinding
     private lateinit var viewModel: TodoViewModels
 
     private fun setupViewModel() {
