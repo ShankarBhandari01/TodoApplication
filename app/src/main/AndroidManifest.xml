@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,16 +14,20 @@
         android:theme="@style/Theme.TodoApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ui.TodoActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:name=".ui.login.LoginActivity"
+            android:clearTaskOnLaunch="true"
+            android:exported="true"
+            android:label="@string/title_activity_login"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.TodoActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

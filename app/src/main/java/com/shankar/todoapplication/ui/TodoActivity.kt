@@ -1,5 +1,7 @@
 package com.shankar.todoapplication.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -23,6 +25,12 @@ class TodoActivity : BaseActivity() {
     }
     private lateinit var bottomSheetBinding: BottomSheetBinding
     private lateinit var viewModel: TodoViewModels
+
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context, TodoActivity::class.java)
+        }
+    }
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(
